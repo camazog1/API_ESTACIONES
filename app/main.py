@@ -1,7 +1,7 @@
 from fastapi import FastAPI, HTTPException, Depends
 from sqlalchemy.orm import Session
 from . import models, schemas
-from .database import SessionLocal
+from .database import SessionLocal, init_db
 from contextlib import asynccontextmanager
 from .KD_Tree import KDTree
 
@@ -22,13 +22,14 @@ def get_db():
         db.close()
 
 @asynccontextmanager
-async def lifespan(app: FastAPI):
+async def initialize(app: FastAPI):
+    init_db() 
     db = next(get_db())
     if stations_kd_tree is None:
         load_stations_into_kd_tree(db)
     yield
 
-app.router.lifespan_context = lifespan
+app.router.initialize = initialize
 
 @app.post("/estaciones/", response_model=schemas.Station)
 def create_station(station: schemas.StationCreate, db: Session = Depends(get_db)):
