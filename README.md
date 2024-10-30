@@ -15,8 +15,8 @@ Este proyecto es una API REST desarrollada en FastAPI para la gestión de estaci
 ### 1. Clonar el repositorio
 
 ```bash
-git clone https://github.com/tu-usuario/nombre-del-repositorio.git
-cd nombre-del-repositorio
+git clone https://https://github.com/camazog1/API_ESTACIONES/
+cd API_ESTACIONES
 ```
 
 ### 2. Configurar un entorno virtual
