@@ -7,6 +7,7 @@ from .KD_Tree import KDTree
 
 app = FastAPI()
 stations_kd_tree = None
+init_db() 
 
 def load_stations_into_kd_tree(db):
     global stations_kd_tree
@@ -23,7 +24,6 @@ def get_db():
 
 @asynccontextmanager
 async def initialize(app: FastAPI):
-    init_db() 
     db = next(get_db())
     if stations_kd_tree is None:
         load_stations_into_kd_tree(db)
