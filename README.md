@@ -6,9 +6,10 @@ Este proyecto es una API REST desarrollada en FastAPI para la gestión de estaci
 
 ## Tabla de Contenidos
 
-- [Instalación y Configuración](#instalación-y-configuración)
-- [Ejecutar el Proyecto](#ejecutar-el-proyecto)
-- [Pruebas Unitarias](#ejecutar-pruebas-unitarias)
+- Instalación y Configuación
+- Ejecutar el Proyecto
+- Migraciones del Proyecto
+- Pruebas Unitarias
 
 ## Instalación y Configuración
 
@@ -62,6 +63,10 @@ uvicorn main:app --reload
 ```
 
 La API estará disponible en [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs).
+
+## Migraciones del Proyecto
+
+Las migraciones de base de datos se manejan automáticamente en el código con SQLAlchemy al iniciar el proyecto. No es necesario nada más ya que están integradas en la aplicación. Simplemente, la base de datos debe estar configurada.
 
 ## Pruebas Unitarias
 
