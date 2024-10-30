@@ -2,29 +2,13 @@ import os
 import pytest
 from fastapi.testclient import TestClient
 from app.main import app  
-from app.database import init_db, engine, Base
-from sqlalchemy import create_engine
-from dotenv import load_dotenv
 import math
 
 @pytest.fixture(scope="module")
 def test_client():
 
-    load_dotenv()
-
-    test_db_url = os.getenv("DATABASE_URL1")
-    
-    test_engine = create_engine(test_db_url)
-    
-    Base.metadata.create_all(bind=test_engine)
-
-    os.environ["DATABASE_URL"] = test_db_url
-
     client = TestClient(app)
     yield client
-
-    Base.metadata.drop_all(bind=test_engine)
-
 
 def test_create_station(test_client):
     new_station = {
