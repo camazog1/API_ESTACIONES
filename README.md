@@ -10,6 +10,8 @@ Este proyecto es una API REST desarrollada en FastAPI para la gestión de estaci
 - Ejecutar el Proyecto
 - Migraciones del Proyecto
 - Pruebas Unitarias
+- Docker
+- Referencias
 
 ## Instalación y Configuración
 
@@ -197,3 +199,35 @@ unset TESTING # En Windows - set TESTING=
 
    - Esta prueba realiza una comparación entre el resultado de la estación más cercana obtenida mediante dos métodos diferentes: un algoritmo de fuerza bruta y el método `KD-Tree`.
    - Compara los resultados para asegurarse de que ambos métodos devuelvan la misma estación más cercana, si `KD-Tree` da el mismo que fuerza bruta signifca que funciona de una manera correcta.
+
+## Docker
+
+Para el uso de docker ejecuta:
+
+```bash
+docker-compose up --build
+```
+
+La API estará disponible en [http://localhost:8000/docs](http://localhost:8000/docs).
+
+Para eliminar todos los contenedores y configuraciones definidas, pero no los volumenes en `docker-compose.yml` ejecuta después de cerrar el proceso anterior:
+
+```bash
+docker-compose down
+```
+
+Para hacer lo anterior pero tambien los volumenes ejecuta:
+
+```bash
+docker-compose down -v
+```
+
+## Referencias
+
+* *KD-Trees* . (s. f.). CMU CS Academy. **https://www.cs.cmu.edu/~ckingsf/bioinfo-lectures/kdtrees.pdf**
+* *FastAPI* . (s. f.-b). **https://fastapi.tiangolo.com/**
+* *Full pytest documentation - pytest documentation* . (s. f.). **https://docs.pytest.org/en/stable/contents.html**
+* Computerphile. (2022, 21 enero). *K-d Trees - computerphile* [Vídeo]. YouTube. **https://www.youtube.com/watch?v=BK5x7IUTIyU**
+* GeeksforGeeks. (2020, 16 marzo). *K-Dimensional Tree [Search and Insert] | GeeksforGeeks* [Vídeo]. YouTube. **https://www.youtube.com/watch?v=2Gul_-cbWM0**GeeksforGeeks. (2020, 16 marzo). *K-Dimensional Tree [Search and Insert] | GeeksforGeeks* [Vídeo]. YouTube. **https://www.youtube.com/watch?v=2Gul_-cbWM0**
+* colaboradores de Wikipedia. (2020, 20 agosto).  *Árbol kd* . Wikipedia, la Enciclopedia Libre. **https://es.wikipedia.org/wiki/%C3%81rbol_kd**
+* *«Home»* . (2024, 30 octubre). Docker Documentation. **https://docs.docker.com/**
