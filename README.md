@@ -153,9 +153,9 @@ Desplegamos la vista de `GET/estaciones/cercana/{station_id}` dando click en ell
 
 Se le da la `id` de la estación a la que le queremos buscar la estación más cercana y se selecciona `Execute`, este método usara el `Algoritmo KD-Tree` para encontrar la solución con una complejidad temporal de `O(Log n)`. En el apartado de `Responses` se debe ver algo asi:
 
-![1730317747848](image/README/1730317747848.png)
+![1730400196196](image/README/1730400196196.png)
 
-Nos dara una lista donde el primero elemento es la estación a la que se le busca la más cercana y el segundo elemento es la estación más cercana a ese primer elemento.
+Nos dara una lista donde el primero elemento es la estación a la que se le busca la más cercana y el segundo elemento es la estación más cercana a ese primer elemento, ademas de la distacian que hay entre ellas.
 
 ## Migraciones del Proyecto
 
