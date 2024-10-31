@@ -10,6 +10,8 @@ Este proyecto es una API REST desarrollada en FastAPI para la gestión de estaci
 - Ejecutar el Proyecto
 - Migraciones del Proyecto
 - Pruebas Unitarias
+- Docker
+- Referencias
 
 ## Instalación y Configuración
 
@@ -114,6 +116,35 @@ unset TESTING # En Windows - set TESTING=
 
    - Esta prueba realiza una comparación entre el resultado de la estación más cercana obtenida mediante dos métodos diferentes: un algoritmo de fuerza bruta y el método `KD-Tree`.
    - Compara los resultados para asegurarse de que ambos métodos devuelvan la misma estación más cercana, si `KD-Tree` da el mismo que fuerza bruta signifca que funciona de una manera correcta.
+
+## Docker
+
+Para el uso de docker ejecuta:
+
+```shell
+docker-compose up --build
+```
+
+La API estará disponible en [http://localhost:8000/docs](http://localhost:8000/docs) y ademas la interface grafica estará disponible en el segundo link que NiceGUI en algo parecido a esto:
+
+```bash
+NiceGUI ready to go on http://localhost:8080, and http://192.168.0.3:8080
+```
+
+En este caso fue [http://192.168.0.3:8080](http://192.168.0.3:8080). **Este fue mi caso pero puede cambiar la dirección.**
+
+Para eliminar todos los contenedores y configuraciones definidas, pero no los volumenes en `docker-compose.yml` ejecuta después de cerrar el proceso anterior:
+
+```shell
+docker-compose down
+```
+
+Para hacer lo anterior pero tambien los volumenes ejecuta:
+
+```shell
+docker-compose down -v
+```
+
 
 ## Referencias
 

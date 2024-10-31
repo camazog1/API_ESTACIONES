@@ -1,5 +1,6 @@
 import math
 
+# Node class
 class Node:
     def __init__(self, point, station_id, left=None, right=None):
         self.point = point
@@ -8,11 +9,13 @@ class Node:
         self.right = right
         self.distance = 0
 
+# KDTree class
 class KDTree:
     def __init__(self, points_with_ids):
         self.k = 2
         self.root = self.build_kd_tree(points_with_ids)
 
+    # Builds a KDTree with k-dimensional points in this case 2 dimensions
     def build_kd_tree(self, points_with_ids, depth=0):
         if not points_with_ids:
             return None
@@ -30,9 +33,10 @@ class KDTree:
             right=self.build_kd_tree(points_with_ids[median + 1:], depth + 1)
         )
     
+    # Inserts a point into the KDTree
     def insert(self, point, station_id, depth=0):
         self.root = self._insert(self.root, point, station_id, depth)
-
+    
     def _insert(self, node, point, station_id, depth):
         if node is None:
             return Node(point, station_id)
@@ -44,7 +48,8 @@ class KDTree:
             node.right = self._insert(node.right, point, station_id, depth + 1)
 
         return node
-
+    
+    # Finds the nearest neighbor of a point
     def nearest_neighbor(self, node, target, target_id, depth=0, best=None):
         if node is None:
             return best
@@ -70,7 +75,8 @@ class KDTree:
                 best = self.nearest_neighbor(node.left, target, target_id, depth + 1, best)
 
         return best
-
+    
+    # Operation Euclidean distance
     @staticmethod
     def distance(point1, point2):
         return math.sqrt((float(point1[0]) - float(point2[0])) ** 2 + (float(point1[1]) - float(point2[1])) ** 2)
