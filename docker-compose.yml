@@ -13,6 +13,7 @@ services:
       - db
     volumes:
       - .:/app
+    command: /bin/sh -c "uvicorn app.main:app --host 0.0.0.0 --port 8000 & python -m app.frontend"
 
   db:
     image: postgres:latest
