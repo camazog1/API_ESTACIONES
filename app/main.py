@@ -12,6 +12,7 @@ init_db()
 def load_stations_into_kd_tree(db):
     global stations_kd_tree
     stations = db.query(models.Station).all()
+    print(f"Loaded stations") 
     info_nodes = [((station.latitude, station.longitude), station.id) for station in stations]
     stations_kd_tree = KDTree(info_nodes)
 
@@ -29,7 +30,7 @@ async def initialize(app: FastAPI):
         load_stations_into_kd_tree(db)
     yield
 
-app.router.initialize = initialize
+app.router.initialize = initialize, 
 
 @app.post("/estaciones/", response_model=schemas.Station)
 def create_station(station: schemas.StationCreate, db: Session = Depends(get_db)):
@@ -39,7 +40,7 @@ def create_station(station: schemas.StationCreate, db: Session = Depends(get_db)
     if existing_station:
         raise HTTPException(status_code=400, detail="La estación con este nombre ya existe.")
 
-    last_station = create_station(station.name, station.location, station.option)
+    last_station = create_station_entry(station.name, station.location, station.option)
     latitude, longitude = last_station["location"]
 
     existing_location = db.query(models.Station).filter(
@@ -69,6 +70,9 @@ def read_stations(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)
 def read_station_nearest(station_id: int, db: Session = Depends(get_db)):
     global stations_kd_tree 
 
+    if stations_kd_tree is None:
+        load_stations_into_kd_tree(db)
+
     station = db.query(models.Station).filter(models.Station.id == station_id).first()
     if station is None:
         raise HTTPException(status_code=404, detail="Estación no encontrada")
@@ -92,7 +96,7 @@ def read_station_nearest(station_id: int, db: Session = Depends(get_db)):
     
     return [station, response]
 
-def create_station(name: str, location: dict, option: int):
+def create_station_entry(name: str, location: dict, option: int):
     if option == 0:
         lat = float(location[0])
         lon = float(location[1])
@@ -119,3 +123,4 @@ def create_station(name: str, location: dict, option: int):
             lon = -lon
 
         return {"name": name, "location": (lat, lon)}
+    
