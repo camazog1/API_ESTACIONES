@@ -6,6 +6,7 @@ class Node:
         self.id = station_id
         self.left = left
         self.right = right
+        self.distance = 0
 
 class KDTree:
     def __init__(self, points_with_ids):
@@ -57,11 +58,15 @@ class KDTree:
 
         if target[axis] < node.point[axis]:
             best = self.nearest_neighbor(node.left, target, target_id, depth + 1, best)
-            if (float(target[axis]) + self.distance(best.point, target) >= float(node.point[axis])):
+            current_distance = self.distance(node.point, target)
+            if (float(target[axis]) + current_distance >= float(node.point[axis])):
+                best.distance = current_distance
                 best = self.nearest_neighbor(node.right, target, target_id, depth + 1, best)
         else:
             best = self.nearest_neighbor(node.right, target, target_id, depth + 1, best)
-            if (float(target[axis]) - self.distance(best.point, target) <= float(node.point[axis])):
+            current_distance = self.distance(node.point, target)
+            if (float(target[axis]) - current_distance <= float(node.point[axis])):
+                best.distance = current_distance
                 best = self.nearest_neighbor(node.left, target, target_id, depth + 1, best)
 
         return best

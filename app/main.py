@@ -2,6 +2,7 @@ from fastapi import FastAPI, HTTPException, Depends
 from sqlalchemy.orm import Session
 from . import models, schemas
 from .database import SessionLocal, init_db
+from fastapi.encoders import jsonable_encoder
 from .KD_Tree import KDTree
 
 app = FastAPI()
@@ -56,7 +57,7 @@ def create_station(station: schemas.StationCreate, db: Session = Depends(get_db)
 def read_stations(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     return db.query(models.Station).offset(skip).limit(limit).all()
 
-@app.get("/estaciones/cercana/{station_id}", response_model=list[schemas.Station])
+@app.get("/estaciones/cercana/{station_id}", response_model=schemas.nearstationresponse)
 def read_station_nearest(station_id: int, db: Session = Depends(get_db)):
     global stations_kd_tree 
 
@@ -76,6 +77,13 @@ def read_station_nearest(station_id: int, db: Session = Depends(get_db)):
 
     if nearest_station is None:
         return None
+    
+    current_station = {
+        "id":station.id,
+        "name":station.name,
+        "latitude":station.latitude,
+        "longitude":station.longitude
+    }
 
     response = {
         "id": nearest_station.id,
@@ -83,8 +91,13 @@ def read_station_nearest(station_id: int, db: Session = Depends(get_db)):
         "latitude": nearest_station.latitude,
         "longitude": nearest_station.longitude
     }
+
+    complete_response = {
+        "stations": [current_station, response],
+        "distance": nearest_node.distance
+    }
     
-    return [station, response]
+    return complete_response
 
 def create_station_entry(name: str, location: dict, option: int):
     if option == 0:
