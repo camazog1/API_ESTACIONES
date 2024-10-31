@@ -62,98 +62,15 @@ En este momento es necesario estar en el entorno virtual y en la carpeta `API_ES
 uvicorn main:app --reload
 ```
 
-La API estará disponible en [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs).
+y en otra terminal ejecuta:
 
-### Manual de Uso
+```bash
+python -m app.frontend
+```
 
-Debes ver algo tal que así:
+Aqui se estaran ejecutando 2 servicios, uno funciona de la misma manera que en el `main` ejecutandose en la [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs). y la interface Grafica se ejecutara en [http://127.0.0.1:8080/](http://127.0.0.1:8080/).
 
-![1730315274543](image/README/1730315274543.png)
-
-En este apartado se puede ver el `POST/estaciones/`, `GET/estaciones/` y `GET/estaciones/cercana/{station_id}`.
-
-**Para `POST/estaciones/:`**
-
-Desplegamos la vista de `POST/estaciones/` dando click en ella, luego se preciona donde dice `Try it out` en la izquina superior derecha y se vera algo asi:
-
-![1730315683984](image/README/1730315683984.png)
-
-Para ingresar datos tenemos 2 maneras:
-
-1. Ingresar la ubicación en **Coordenadas Cartesianas:**
-   * Para esto se dara un nombre y las coordenadas asi:
-   * ```json
-     {"name": "Nombre Estación",
-     "location": [
-     "Latitude",
-     "Longitude"
-     ],
-     "option": 0
-     }
-     ```
-   * La `Latitude` y `Longitude` se dan como strings y `option` es `0` indicando que se usan coordenadas cartesianas, ejemplo:
-   * ```json
-     {"name": "Estación A",
-     "location": [
-     "43.709212",
-     "52.187213"
-     ],
-     "option": 0
-     }
-     ```
-
-     > **Advertencia:** Solo se pueden tener maximo `6` decimales para el manejo correcto de coordenadas
-     >
-2. Ingresar la ubicación en **Coordenadas Geografica:**
-   * Para esto se dara un nombre y las coordenadas asi:
-   * ```json
-     {"name": "Nombre Estación",
-     "location": [
-     "Latitude",
-     "Longitude"
-     ],
-     "option": 1
-     }
-     ```
-   * La `Latitude` y `Longitude` se dan como strings y `option` es `1` indicando que se usan coordenadas geograficas, ejemplo:
-   * ```json
-     {"name": "Estación B",
-     "location": [
-     "60°70'92''N",
-     "9°87'45''W"
-     ],
-     "option": 1
-     }
-     ```
-
-     > **Advertencia:** Siempre se debe cumplir la notación `xx°xx'xx''x` de `grados`, `minutos`, `segundos` y `orientación` respectivamente.
-     >
-
-Una vez dados los datos se presiona en el boton `Execute` en la parte de abajo y en el apartado de `Responses` algo asi:
-
-![1730317039297](image/README/1730317039297.png)
-
-**Para `GET/estaciones/`:**
-
-Desplegamos la vista de `GET/estaciones/` dando click en ella, luego se preciona donde dice `Try it out` en la izquina superior derecha y se vera algo asi:
-
-![1730317190814](image/README/1730317190814.png)
-
-Le damos un `skip` para saber desde que `id` debe empezar a mostrar y un `limit` para saber cuantas estaciones mostrar, finalmente se selecciona `Execute` y vemos el resultado en `Responses`, debe ser algo asi:
-
-![1730317330829](image/README/1730317330829.png)
-
-**Para `GET/estaciones/cercana/{station_id}`:**
-
-Desplegamos la vista de `GET/estaciones/cercana/{station_id}` dando click en ella, luego se preciona donde dice `Try it out` en la izquina superior derecha y se vera algo asi:
-
-![1730317416082](image/README/1730317416082.png)
-
-Se le da la `id` de la estación a la que le queremos buscar la estación más cercana y se selecciona `Execute`, este método usara el `Algoritmo KD-Tree` para encontrar la solución con una complejidad temporal de `O(Log n)`. En el apartado de `Responses` se debe ver algo asi:
-
-![1730317747848](image/README/1730317747848.png)
-
-Nos dara una lista donde el primero elemento es la estación a la que se le busca la más cercana y el segundo elemento es la estación más cercana a ese primer elemento.
+> ⚠️ **Advertencia:** En la interface grafica sigue siendo obligatorio el uso de la estructura `xx°xx'xx''x` para la entrega de **Coordenadas Geograficas** donde son `grados`, `minutos`, `segundos` y `orientación`, donde la orientación puede ser `N` o `S` para **Latitud** y `E` o `W` para **Longitud.**
 
 ## Migraciones del Proyecto
 
